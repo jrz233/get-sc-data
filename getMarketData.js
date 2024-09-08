@@ -1,6 +1,7 @@
 const fs = require('fs').promises;
 const path = require('path');
-const fetch = require('node-fetch');
+// 动态导入 node-fetch
+const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 // 需要获取的物品id
 const ids = [
@@ -41,7 +42,7 @@ async function fetchMarketData(itemID, realm) {
 }
 
 // 并发限制批量请求并确保获取全部数据
-async function fetchWithLimit(ids, realm_id, limit = 5) {
+async function fetchWithLimit(ids, realm_id, limit = 3) {
   const minPriceDict = {};
   let batchCount = 0;
   let failedRequests = [];
