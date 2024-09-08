@@ -26,15 +26,15 @@ jobs:
       run: npm install axios node-fetch || true  # 安装所有依赖，出错不停止
 
     - name: Run getMarketData_r1
-      run: node getmk.js 0 || true  # 获取 r1 市场数据，出错不停止
+      run: node getMarketData.js 0 || true  # 获取 r1 市场数据，出错不停止
 
     - name: Run getMarketData_r2
-      run: node getmk.js 1 || true  # 获取 r2 市场数据，出错不停止
+      run: node getMarketData.js 1 || true  # 获取 r2 市场数据，出错不停止
 
     - name: Run getModData
       run: |
-        node getdata.js '' 'r1' '0' $R1 true || true  # 获取 r1 模型数据，出错不停止
-        node getdata.js '' 'r2' '1' $R2 true || true  # 获取 r2 模型数据，出错不停止
+        node getModData.js '' 'r1' '0' $R1 true || true  # 获取 r1 模型数据，出错不停止
+        node getModData.js '' 'r2' '1' $R2 true || true  # 获取 r2 模型数据，出错不停止
 
     - name: Save output files
       run: |
