@@ -11,7 +11,7 @@ jobs:
     env:
       OUTPUT_DIR: ./data
       R1: 萧条
-      R2: 萧条
+      R2: 平缓
 
     steps:
     - name: Checkout Repository
