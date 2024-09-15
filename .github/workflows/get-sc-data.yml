@@ -48,6 +48,7 @@ jobs:
         git config --local user.email "79193800+jrz233@users.noreply.github.com"
         git config --local user.name "jrz233"
         git add ${{ env.OUTPUT_DIR }}/
-        git commit -m "更新模型和市场数据" || { echo "没有要提交的更改"; exit 0; }
+        timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+        git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }
         git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || true  # 出错不停止
