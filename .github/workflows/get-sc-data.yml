@@ -1,54 +1,53 @@
 name: 获取模型跟市场数据
-
-on:
-  push:
-    branches:
+on:  
+  push:    
+    branches:      
       - main  # 当 main 分支有 push 事件时触发
 
-jobs:
-  run-script:
-    runs-on: ubuntu-latest
-    env:
-      OUTPUT_DIR: ./data
-      R1: 萧条
-      R2: 平缓
+jobs:  
+  run-script:    
+    runs-on: ubuntu-latest    
+    env:      
+      OUTPUT_DIR: ./data      
+      R1: 萧条      
+      R2: 平缓    
+    steps:    
+    - name: Checkout Repository      
+      uses: actions/checkout@v3    
 
-    steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+    - name: Set up Node.js      
+      uses: actions/setup-node@v3      
+      with:        
+        node-version: '18'    
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+    - name: Install Dependencies      
+      run: npm install axios node-fetch    
 
-    - name: Install Dependencies
-      run: npm install axios node-fetch
+    - name: Run getMarketData_r1      
+      run: node getMarketData.js 0    
 
-    - name: Run getMarketData_r1
-      run: node getMarketData.js 0
+    - name: Run getMarketData_r2      
+      run: node getMarketData.js 1    
 
-    - name: Run getMarketData_r2
-      run: node getMarketData.js 1
+    - name: Run getModData      
+      run: |        
+        node getModData.js '' 'r1' '0' $R1 true        
+        node getModData.js '' 'r2' '1' $R2 true    
 
-    - name: Run getModData
-      run: |
-        node getModData.js '' 'r1' '0' $R1 true
-        node getModData.js '' 'r2' '1' $R2 true
+    - name: Save output files      
+      run: |        
+        set -e        
+        mkdir -p ${{ env.OUTPUT_DIR }}          
+        cp *_data.json ${{ env.OUTPUT_DIR }} || { echo "复制文件失败"; exit 1; }      
+      if: always()  # 无论前面步骤是否出错，都会执行    
 
-    - name: Save output files
-      run: |
-        set -e
-        mkdir -p ${{ env.OUTPUT_DIR }}
-        cp *_data.json ${{ env.OUTPUT_DIR }} || { echo "复制文件失败"; exit 1; }
-      if: always()  # 无论前面步骤是否出错，都会执行
-
-    - name: Commit changes
-      run: |
-        git config --local user.email "79193800+jrz233@users.noreply.github.com"
+    - name: Commit changes      
+      run: |        
+        git config --local user.email "79193800+jrz233@users.noreply.github.com"        
         git config --local user.name "jrz233"
-        git add ${{ env.OUTPUT_DIR }}/
-        timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-        git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }
-        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止
+        export TZ="Asia/Shanghai"        
+        git add ${{ env.OUTPUT_DIR }}/        
+        timestamp=$(date +"%Y-%m-%d %H:%M:%S")        
+        git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }        
+        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止          
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || true  # 出错不停止
