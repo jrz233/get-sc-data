@@ -1268,6 +1268,15 @@
     "modeledStoreWages": null,
     "modeledUnitsSoldAnHour": 0
   },
+  "146": {
+    "averagePrice": 0,
+    "marketSaturation": 0,
+    "building_wages": 0,
+    "buildingLevelsNeededPerHour": 0.26383334562273086,
+    "modeledProductionCostPerUnit": 1.8081456132742446,
+    "modeledStoreWages": null,
+    "modeledUnitsSoldAnHour": 30
+  },
   "PROFIT_PER_BUILDING_LEVEL": "450",
   "RETAIL_MODELING_QUALITY_WEIGHT": "0.3"
 }
