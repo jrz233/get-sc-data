@@ -10,7 +10,7 @@ jobs:
     env:      
       OUTPUT_DIR: ./data      
       R1: 萧条      
-      R2: 平缓    
+      R2: 景气
     steps:    
     - name: Checkout Repository      
       uses: actions/checkout@v3    
@@ -45,7 +45,7 @@ jobs:
       run: |        
         git config --local user.email "79193800+jrz233@users.noreply.github.com"        
         git config --local user.name "jrz233"
-        export TZ="Asia/Shanghai"        
+        export TZ="Asia/Shanghai"          
         git add ${{ env.OUTPUT_DIR }}/        
         timestamp=$(date +"%Y-%m-%d %H:%M:%S")        
         git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }        
