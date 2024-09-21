@@ -228,8 +228,14 @@ async function fetchDataAndProcess(sessionid, realm, realm_id, customEconomyStat
     }
 
     const marketData = await getMarketData(realm_id);
+    
+    // 检查ID为3的averagePrice，如果等于0则退出程序
+    if (marketData[3] && marketData[3].averagePrice === 0) {
+        console.log('ID为3的averagePrice为0，退出程序。');
+        return; // 直接退出函数，不执行后续操作
+    }
+    
     const rowData1 = await downloadAndExtractData(realm_id, economyState, marketData);
-
    // console.log(rowData1);
 
     // 保存数据到文件
