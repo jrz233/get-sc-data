@@ -1272,8 +1272,8 @@
     "averagePrice": 0,
     "marketSaturation": 0,
     "building_wages": 0,
-    "buildingLevelsNeededPerHour": 0.4509084907488063,
-    "modeledProductionCostPerUnit": 1.8708891534158933,
+    "buildingLevelsNeededPerHour": 0.7785896111162285,
+    "modeledProductionCostPerUnit": 3.090059405787533,
     "modeledStoreWages": 227.7,
     "modeledUnitsSoldAnHour": 50
   },
@@ -1281,8 +1281,8 @@
     "averagePrice": 0,
     "marketSaturation": 0,
     "building_wages": 0,
-    "buildingLevelsNeededPerHour": 2.1552581008344327,
-    "modeledProductionCostPerUnit": 18.89031418970654,
+    "buildingLevelsNeededPerHour": 2.417402997128371,
+    "modeledProductionCostPerUnit": 20.109484442078177,
     "modeledStoreWages": 227.7,
     "modeledUnitsSoldAnHour": 40
   },
@@ -1294,6 +1294,15 @@
     "modeledProductionCostPerUnit": 17.59640826553146,
     "modeledStoreWages": 227.7,
     "modeledUnitsSoldAnHour": 12
+  },
+  "149": {
+    "averagePrice": 0,
+    "marketSaturation": 0,
+    "building_wages": 0,
+    "buildingLevelsNeededPerHour": 0,
+    "modeledProductionCostPerUnit": 492.08943909572,
+    "modeledStoreWages": 645.15,
+    "modeledUnitsSoldAnHour": 0
   },
   "PROFIT_PER_BUILDING_LEVEL": "450",
   "RETAIL_MODELING_QUALITY_WEIGHT": "0.3"
