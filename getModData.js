@@ -3,8 +3,8 @@ const fs = require('fs');
 
 // 分类存放不同建筑工资
 const categorizedBuildingWages = {
-    //电子产品商店跟五金
-    "172.5": [102, 103, 108, 109, 110, 24, 25, 26, 27, 28, 98],
+    //电子产品商店和五金
+    "172.5": [24, 25, 26, 27, 28, 98, 102, 103, 108, 109, 110],
     //加油站
     "345": [11, 12],
     //时装商店
@@ -13,6 +13,8 @@ const categorizedBuildingWages = {
     "138": [3, 4, 5, 7, 8, 9, 67, 119, 122, 123, 124, 125, 126, 127, 140, 144],
     //车行
     "379.5": [53, 54, 55, 56, 57],
+    //万圣节市场
+    "207": [146, 147, 148],
     
 };
 
@@ -24,7 +26,6 @@ Object.entries(categorizedBuildingWages).forEach(([wage, ids]) => {
         buildingWagesData[id] = parseFloat(wage);
     });
 });
-
 
 
 // 获取经济周期
@@ -251,7 +252,7 @@ const args = process.argv.slice(2);
 const sessionid = args[0] || '';  // 使用sessionid可获取到api中的周期
 const dataFile = args[1] || 'r1';  // 服务器名称 输出文件名使用
 const mode = args[2] || '0';  // 服务器id r1：0   r2：1
-const quality = args[3] || '平缓';  // 自定义周期 '平缓'
+const quality = args[3] || '萧条';  // 自定义周期 
 const isDebug = args[4] === 'true';  // 是否使用自定义周期，否就使用api获取
 
 // 调用函数
