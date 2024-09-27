@@ -1271,7 +1271,7 @@
   "146": {
     "averagePrice": 2.5,
     "marketSaturation": 0.1,
-    "building_wages": 0,
+    "building_wages": 207,
     "buildingLevelsNeededPerHour": 0.7414502950136063,
     "modeledProductionCostPerUnit": 2.8884140054447056,
     "modeledStoreWages": 227.7,
@@ -1280,7 +1280,7 @@
   "147": {
     "averagePrice": 36,
     "marketSaturation": 0.1,
-    "building_wages": 0,
+    "building_wages": 207,
     "buildingLevelsNeededPerHour": 2.226300077293402,
     "modeledProductionCostPerUnit": 18.354213719443855,
     "modeledStoreWages": 227.7,
@@ -1289,7 +1289,7 @@
   "148": {
     "averagePrice": 29,
     "marketSaturation": 0.1,
-    "building_wages": 0,
+    "building_wages": 207,
     "buildingLevelsNeededPerHour": 1.0102954349597313,
     "modeledProductionCostPerUnit": 16.32988867285757,
     "modeledStoreWages": 227.7,
