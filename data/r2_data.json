@@ -1304,6 +1304,6 @@
     "modeledStoreWages": 645.15,
     "modeledUnitsSoldAnHour": 0
   },
-  "PROFIT_PER_BUILDING_LEVEL": "450",
-  "RETAIL_MODELING_QUALITY_WEIGHT": null
+  "PROFIT_PER_BUILDING_LEVEL": 450,
+  "RETAIL_MODELING_QUALITY_WEIGHT": 0.3
 }
