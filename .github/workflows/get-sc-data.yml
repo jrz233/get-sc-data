@@ -17,7 +17,7 @@ jobs:
 
     - name: Set up Node.js      
       uses: actions/setup-node@v3      
-      with:        
+      with:
         node-version: '18'    
 
     - name: Install Dependencies      
@@ -30,24 +30,24 @@ jobs:
       run: node getMarketData.js 1    
 
     - name: Run getModData      
-      run: |        
-        node getModData.js '' 'r1' '0' $R1 true        
-        node getModData.js '' 'r2' '1' $R2 true    
+      run: |
+        node getModData.js '' 'r1' '0' $R1 true true
+        node getModData.js '' 'r2' '1' $R2 true true
 
     - name: Save output files      
-      run: |        
-        set -e        
-        mkdir -p ${{ env.OUTPUT_DIR }}          
+      run: |
+        set -e
+        mkdir -p ${{ env.OUTPUT_DIR }}  
         cp *_data.json ${{ env.OUTPUT_DIR }} || { echo "复制文件失败"; exit 1; }      
       if: always()  # 无论前面步骤是否出错，都会执行    
 
     - name: Commit changes      
-      run: |        
-        git config --local user.email "79193800+jrz233@users.noreply.github.com"        
+      run: |
+        git config --local user.email "79193800+jrz233@users.noreply.github.com"
         git config --local user.name "jrz233"
         export TZ="Asia/Shanghai"
-        git add ${{ env.OUTPUT_DIR }}/        
-        timestamp=$(date +"%Y-%m-%d %H:%M:%S")        
-        git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }        
-        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止          
+        git add ${{ env.OUTPUT_DIR }}/
+        timestamp=$(date +"%Y-%m-%d %H:%M:%S")
+        git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }
+        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止  
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || true  # 出错不停止
