@@ -78,25 +78,25 @@ function extractValuesFromJS(jsContent) {
     log("品质权重: " + retailValue);
     if (retailValue === null) {
         console.log('获取错误退出程序。');
-        return;
+        process.exit(1);
     }
     const salesValue = JSON.parse(extractVariableValue(jsContent, salesVarName, 1).replace(/(\w+)\s*:/g, '"$1":'));
     log("建筑数据: " + JSON.stringify(salesValue, null, 2));
     if (salesValue === null) {
         console.log('获取错误退出程序。');
-        return;
+        process.exit(1);
     }
     const averageValue = parseFloat(extractVariableValue(jsContent, averageVarName, 0));
     log("平均工资: " + averageValue);
     if (averageValue === null) {
         console.log('获取错误退出程序。');
-        return;
+        process.exit(1);
     }
     const buildingDetails = extractBuildingDetails(jsContent);
     log("建筑详细信息: " + JSON.stringify(buildingDetails, null, 2));
     if (buildingDetails === null) {
         console.log('获取错误退出程序。');
-        return;
+        process.exit(1);
     }
     
     return {
@@ -243,7 +243,7 @@ async function getMarketData(realm_id) {
         return marketDataMap;
     } catch (error) {
         console.error('获取市场数据时出错:', error.message);
-        return {};
+        process.exit(1);
     }
 }
 
@@ -298,7 +298,7 @@ async function fetchDataAndProcess(sessionid, realm, realm_id, customEconomyStat
 
     if (marketData[3] && (!marketData[3].averagePrice || marketData[3].averagePrice < 0.1)) {
         console.log('数据错误，退出程序。');
-        return;
+        process.exit(1);
     }
 
     const rowData1 = await downloadAndExtractData(realm_id, economyState, marketData);
