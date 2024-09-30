@@ -19,7 +19,8 @@ function log(message) {
 
 // 提取变量名
 function extractVariableName(jsContent, key) {
-    const regex = new RegExp(key + '\\s*:\\s*(\\w+),');
+    // 使用非贪婪匹配查找键对应的变量名
+    const regex = new RegExp(key + '\\s*:\\s*([\\w$]+),');
     const match = jsContent.match(regex);
     return match ? match[1] : null;
 }
@@ -27,29 +28,38 @@ function extractVariableName(jsContent, key) {
 // 提取变量值（匹配模式：0 - 简单值，1 - 复杂对象）
 function extractVariableValue(jsContent, variableName, mode) {
     if (!variableName) return null;
+
+    // 处理包含特殊符号的变量名，确保正则表达式可以正确匹配
+    const escapedVariableName = variableName.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+
     let regex;
     let match;
+
     if (mode === 1) {
-        regex = new RegExp(variableName + '\\s*=\\s*(\\{[\\s\\S]*?\\})', 'i');
+        // 匹配复杂对象
+        regex = new RegExp(escapedVariableName + '\\s*=\\s*(\\{[\\s\\S]*?\\})', 'i');
         match = jsContent.match(regex);
         if (match) {
-            let value = match[1].trim();         
+            let value = match[1].trim();
             return value;
         }
     } else {
-        regex = new RegExp(variableName + '\\s*=\\s*([^,]+),');
+        // 匹配简单值
+        regex = new RegExp(escapedVariableName + '\\s*=\\s*([^,;\\n]+)[,;\\n]');
         match = jsContent.match(regex);
         if (match) {
             let value = match[1].trim();
             if (value.startsWith('.')) {
-                value = '0' + value;
+                value = '0' + value; // 处理值以小数点开头的情况
             }
             return value;
         }
     }
-    log(`在提供的 JS 内容中找不到 ${variableName} 的值`);
+
+    console.log(`在提供的 JS 内容中找不到 ${variableName} 的值`);
     return null;
 }
+
 
 // 提取JS文件中的变量值
 function extractValuesFromJS(jsContent) {
@@ -62,7 +72,7 @@ function extractValuesFromJS(jsContent) {
     log("每级建筑利润: " + profitValue);
     if (profitValue === null) {
         console.log('获取错误退出程序。');
-        return;
+        process.exit(1);
     }
     const retailValue = extractVariableValue(jsContent, retailVarName, 0);
     log("品质权重: " + retailValue);
@@ -256,12 +266,15 @@ async function downloadAndExtractData(realm_id, economyState, marketData) {
                 return extractedData;
             } catch (error) {
                 console.error("JSON 解析错误:", error.message);
+                process.exit(1);
             }
         } else {
             console.log("未找到有效的 JSON 数据。");
+            process.exit(1);
         }
     } catch (error) {
         console.error('下载或提取数据时出错:', error.message);
+        process.exit(1);
     }
     return {};
 }
@@ -289,6 +302,7 @@ async function fetchDataAndProcess(sessionid, realm, realm_id, customEconomyStat
     }
 
     const rowData1 = await downloadAndExtractData(realm_id, economyState, marketData);
+    
     const fileName = `${realm}_data.json`;
     fs.writeFileSync(fileName, JSON.stringify(rowData1, null, 2), 'utf-8');
     console.log(`数据已保存到 ${fileName}`);
