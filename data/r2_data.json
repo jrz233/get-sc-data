@@ -541,7 +541,7 @@
   },
   "148": {
     "averagePrice": 115.22614144028667,
-    "marketSaturation": 3.875124746689288,
+    "marketSaturation": 1.7,
     "building_wages": 207,
     "buildingLevelsNeededPerHour": 1.0608687579723002,
     "modeledProductionCostPerUnit": 17.59640826553146,
