@@ -1,41 +1,41 @@
 name: 获取市场数据
-on:  
-  push:    
-    branches:      
+on:
+  push:
+    branches:
       - main  # 当 main 分支有 push 事件时触发
 
-jobs:  
-  run-script:    
-    runs-on: ubuntu-latest    
-    env:      
-      OUTPUT_DIR: ./data      
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+    env:
+      OUTPUT_DIR: ./data
 
-    steps:    
-    - name: Checkout Repository      
-      uses: actions/checkout@v3    
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-    - name: Set up Node.js      
-      uses: actions/setup-node@v3      
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
       with:
-        node-version: '18'    
+        node-version: '18'
 
-    - name: Install Dependencies      
-      run: npm install axios node-fetch    
+    - name: Install Dependencies
+      run: npm install axios node-fetch
 
-    - name: Run getMarketData_r1      
-      run: node getMarketData.js 0    
+    - name: Run getMarketData_r1
+      run: node getMarketData.js 0
 
-    - name: Run getMarketData_r2      
+    - name: Run getMarketData_r2
       run: node getMarketData.js 1
 
-    - name: Save output files      
+    - name: Save output files
       run: |
         set -e
-        mkdir -p ${{ env.OUTPUT_DIR }}  
-        cp *_data.json ${{ env.OUTPUT_DIR }} || { echo "复制文件失败"; exit 1; }      
-      if: always()  # 无论前面步骤是否出错，都会执行    
+        mkdir -p ${{ env.OUTPUT_DIR }}
+        cp *_data.json ${{ env.OUTPUT_DIR }} || { echo "复制文件失败"; exit 1; }
+      if: always()  # 无论前面步骤是否出错，都会执行
 
-    - name: Commit changes      
+    - name: Commit changes
       run: |
         git config --local user.email "79193800+jrz233@users.noreply.github.com"
         git config --local user.name "jrz233"
