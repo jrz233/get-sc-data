@@ -36,12 +36,22 @@ function extractVariableValue(jsContent, variableName, mode) {
     let match;
 
     if (mode === 1) {
-        // 匹配复杂对象
-        regex = new RegExp(escapedVariableName + '\\s*=\\s*(\\{[\\s\\S]*?\\})', 'i');
-        match = jsContent.match(regex);
-        if (match) {
-            let value = match[1].trim();
-            return value;
+        // 匹配复杂对象，使用递归的方式来匹配嵌套对象，直到遇到完整的 '}'
+        let braceLevel = 0;
+        let startIndex = jsContent.indexOf(variableName);
+        if (startIndex !== -1) {
+            startIndex = jsContent.indexOf('=', startIndex) + 1;
+            for (let i = startIndex; i < jsContent.length; i++) {
+                if (jsContent[i] === '{') {
+                    if (braceLevel === 0) startIndex = i;
+                    braceLevel++;
+                } else if (jsContent[i] === '}') {
+                    braceLevel--;
+                    if (braceLevel === 0) {
+                        return jsContent.substring(startIndex, i + 1).trim();
+                    }
+                }
+            }
         }
     } else {
         // 匹配简单值
@@ -80,6 +90,7 @@ function extractValuesFromJS(jsContent) {
         console.log('获取错误退出程序。');
         process.exit(1);
     }
+    
     const salesValue = JSON.parse(extractVariableValue(jsContent, salesVarName, 1).replace(/(\w+)\s*:/g, '"$1":'));
     log("建筑数据: " + JSON.stringify(salesValue, null, 2));
     if (salesValue === null) {
@@ -273,6 +284,7 @@ async function downloadAndExtractData(realm_id, economyState, marketData) {
             process.exit(1);
         }
     } catch (error) {
+        
         console.error('下载或提取数据时出错:', error.message);
         process.exit(1);
     }
