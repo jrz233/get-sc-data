@@ -1,4 +1,4 @@
-name: 获取模型跟市场数据
+name: 获取模型数据
 on:  
   push:    
     branches:      
@@ -48,6 +48,6 @@ jobs:
         export TZ="Asia/Shanghai"
         git add ${{ env.OUTPUT_DIR }}/
         timestamp=$(date +"%Y-%m-%d %H:%M:%S")
-        git commit -m "自动提交: $timestamp" || { echo "没有要提交的更改"; exit 0; }
+        git commit -m "提交模型数据: $timestamp" || { echo "没有要提交的更改"; exit 0; }
         git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止  
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || true  # 出错不停止
