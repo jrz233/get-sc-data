@@ -32,9 +32,6 @@ function extractVariableValue(jsContent, variableName, mode) {
     // 处理包含特殊符号的变量名，确保正则表达式可以正确匹配
     const escapedVariableName = variableName.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
 
-    let regex;
-    let match;
-
     if (mode === 1) {
         // 匹配复杂对象，使用递归的方式来匹配嵌套对象，直到遇到完整的 '}'
         let braceLevel = 0;
@@ -55,8 +52,8 @@ function extractVariableValue(jsContent, variableName, mode) {
         }
     } else {
         // 匹配简单值
-        regex = new RegExp(escapedVariableName + '\\s*=\\s*([^,;\\n]+)[,;\\n]');
-        match = jsContent.match(regex);
+        let regex = new RegExp(escapedVariableName + '\\s*=\\s*([^,;\\n]+)[,;\\n]');
+        let match = jsContent.match(regex);
         if (match) {
             let value = match[1].trim();
             if (value.startsWith('.')) {
@@ -90,7 +87,6 @@ function extractValuesFromJS(jsContent) {
         console.log('获取错误退出程序。');
         process.exit(1);
     }
-    
     const salesValue = JSON.parse(extractVariableValue(jsContent, salesVarName, 1).replace(/(\w+)\s*:/g, '"$1":'));
     log("建筑数据: " + JSON.stringify(salesValue, null, 2));
     if (salesValue === null) {
