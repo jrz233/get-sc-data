@@ -38,8 +38,8 @@ jobs:
 
     - name: Commit changes
       run: |
-        git config --local user.email "79193800+jrz233@users.noreply.github.com"
-        git config --local user.name "jrz233"
+        git config --local user.email "actions@github.com"
+        git config --local user.name "actions"
         export TZ="Asia/Shanghai"
         git add ${{ env.OUTPUT_DIR }}/
         timestamp=$(date +"%Y-%m-%d %H:%M:%S")
