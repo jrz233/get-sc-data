@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OUTPUT_DIR: ./data
-      R1: 景气
+      R1: 平缓
       R2: 平缓
     steps:
     - name: Checkout Repository
