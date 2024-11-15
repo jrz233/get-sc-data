@@ -15,12 +15,7 @@ function log(message) {
         console.log(message);
     }
 }
-//确认使用哪个服务器的sessionid
-if (realm_id === '0') {
-    sessionid = process.env.sessionid_0 || sessionid;
-} else {
-    sessionid = process.env[`sessionid_${realm_id}`] || sessionid;
-}
+
 // 提取变量名
 function extractVariableName(jsContent, key) {
     // 使用非贪婪匹配查找键对应的变量名
