@@ -3,8 +3,12 @@ const fs = require('fs');
 
 // 获取命令行参数
 const args = process.argv.slice(2);
-const realm = args[1]; // 服务器 ID
-const isDebug = args[2] || 'false'; // debug
+const realm = args[0];
+const isDebug = (args[1] === 'true');
+
+console.log(`服务器 ID: ${realm}`);
+console.log(`Debug 模式: ${isDebug ? '已启用' : '未启用'}`);
+
 // 输出日志函数
 function log(message) {
     if (isDebug) {
