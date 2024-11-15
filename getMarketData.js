@@ -133,7 +133,7 @@ async function main() {
     process.exit(1);
   }
 
-  const fileNames = { '0': 'r1_market_data.json', '1': 'r2_market_data.json' };
+  const fileNames = { '0': '0_market_data.json', '1': '1_market_data.json' };
   const FILE_PATH = path.join(__dirname, fileNames[REALM_ID] || 'market_data.json');
 
   try {

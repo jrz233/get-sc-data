@@ -3,12 +3,8 @@ const fs = require('fs');
 
 // 获取命令行参数
 const args = process.argv.slice(2);
-const sessionid = args[0] || ''; // sessionid
-const realm = args[1] || 'r1'; //服务器名称
-const realm_id = args[2] || '0';  //服务器id
-const customEconomyState = args[3] || '平缓'; //自定义周期
-const customEconomyStateButton = args[4] || 'false'; //是否自定义周期
-const isDebug = args[5] || 'false'; //debug
+const realm = args[1] || 0; // 服务器 ID
+const isDebug = args[2] || 'false'; // debug
 // 输出日志函数
 function log(message) {
     if (isDebug) {
@@ -176,7 +172,7 @@ function convertToValidJson(jsonDataString) {
 }
 
 // 提取数据
-function extractData(data, realm_id, economyState, marketData, buildingWagesData) {
+function extractData(data, realm, economyState, marketData, buildingWagesData) {
     const rowData3 = {};
     if (data.hasOwnProperty(economyState)) {
         const economyData = data[economyState];
@@ -202,40 +198,34 @@ function extractData(data, realm_id, economyState, marketData, buildingWagesData
 // 获取脚本 URL
 async function fetchScriptUrl() {
     const url = 'https://www.simcompanies.com';
-    const response = await axios.get(url);
-    const html = response.data;
-    const srcMatch = html.match(/crossorigin src="([^"]+)"/);
-    if (srcMatch && srcMatch[1]) {
-        return srcMatch[1];
+    try {
+        const response = await axios.get(url);
+        const html = response.data;
+        const srcMatch = html.match(/crossorigin src="([^"]+)"/);
+        if (srcMatch && srcMatch[1]) {
+            return srcMatch[1];
+        }
+        console.log("未找到脚本 URL");
+        process.exit(1);
+    } catch (error) {
+        console.error('获取脚本 URL 时出错:', error.message);
+        process.exit(1);
     }
-    console.log("未找到脚本 URL");
-    return null;
 }
 
-// 获取经济周期
-async function get_economyState(sessionid) {
-    const url = "https://www.simcompanies.com/api/v2/companies/me/";
-    const cookies = { "sessionid": sessionid };
-    const options = {
-        headers: { "Cookie": Object.keys(cookies).map(key => `${key}=${cookies[key]}`).join("; ") }
-    };
+async function fetchScriptData(scriptUrl) {
     try {
-        const response = await axios.get(url, options);
-        const data = response.data;
-        if (data && data.temporals && data.temporals.hasOwnProperty('economyState')) {
-            const economyState = data.temporals.economyState;
-            log('经济周期: ' + economyState);
-            return economyState;
-        }
+        const response = await axios.get(scriptUrl);
+        return response.data;
     } catch (error) {
-        console.error('获取经济周期时出错:', error.message);
+        console.error('获取脚本内容时出错:', error.message);
+        process.exit(1);
     }
-    return null;
 }
 
 // 获取市场饱和度和平均价格
-async function getMarketData(realm_id) {
-    const url = `https://www.simcompanies.com/api/v4/${realm_id}/resources-retail-info`;
+async function getMarketData(realm) {
+    const url = `https://www.simcompanies.com/api/v4/${realm}/resources-retail-info`;
     try {
         const response = await axios.get(url);
         const marketData = response.data;
@@ -253,67 +243,79 @@ async function getMarketData(realm_id) {
     }
 }
 
-// 下载并提取数据
-async function downloadAndExtractData(realm_id, economyState, marketData) {
-    const url = await fetchScriptUrl();
-    try {
-        const response = await axios.get(url);
-        const content = response.data;
-        const values = extractValuesFromJS(content);
-        const buildingWagesData = calculateBuildingWages(values.AVERAGE_SALARY, values.SALES, values.BUILDING_DETAILS);
-        const jsonDataString = extractJsonString(content);
-        if (jsonDataString) {
-            try {
-                const validJsonString = convertToValidJson(jsonDataString);
-                const jsonData = JSON.parse(validJsonString);
-                const extractedData = extractData(jsonData, realm_id, economyState, marketData, buildingWagesData);
-                extractedData.PROFIT_PER_BUILDING_LEVEL = values.PROFIT_PER_BUILDING_LEVEL;
-                extractedData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
-                return extractedData;
-            } catch (error) {
-                console.error("JSON 解析错误:", error.message);
-                process.exit(1);
-            }
-        } else {
-            console.log("未找到有效的 JSON 数据。");
-            process.exit(1);
-        }
-    } catch (error) {
-        
-        console.error('下载或提取数据时出错:', error.message);
+//提取数据
+async function ExtractData(realm, economyState, marketData, scriptContent) {
+    const jsonDataString = extractJsonString(scriptContent);
+    if (!jsonDataString) {
+        console.log("未找到有效的 JSON 数据。");
         process.exit(1);
     }
-    return {};
+
+    try {
+        // 转换为有效的 JSON 格式
+        const validJsonString = convertToValidJson(jsonDataString);
+        const jsonData = JSON.parse(validJsonString);
+
+        // 提取特定经济周期的数据
+        const economyData = jsonData[economyState];
+        const resultData = {};
+
+        // 提取核心参数
+        const values = extractValuesFromJS(scriptContent);
+        const buildingWagesData = calculateBuildingWages(
+            values.AVERAGE_SALARY,
+            values.SALES,
+            values.BUILDING_DETAILS
+        );
+
+        // 遍历经济数据，整合市场和工资数据
+        for (let id in economyData) {
+            const modelData = economyData[id];
+            const marketInfo = marketData[id] || { averagePrice: 0, marketSaturation: 0 };
+            if (marketInfo.averagePrice >= 0.1 && marketInfo.marketSaturation !== 0) {
+                resultData[id] = {
+                    averagePrice: marketInfo.averagePrice || 0,
+                    marketSaturation: marketInfo.marketSaturation || 0,
+                    building_wages: buildingWagesData[id] || 0,
+                    buildingLevelsNeededPerHour: modelData.buildingLevelsNeededPerHour || 0,
+                    modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
+                    modeledStoreWages: modelData.modeledStoreWages || 0,
+                    modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
+                };
+            }
+        }
+
+        // 添加额外的计算结果
+        resultData.PROFIT_PER_BUILDING_LEVEL = values.PROFIT_PER_BUILDING_LEVEL;
+        resultData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
+
+        return resultData;
+    } catch (error) {
+        console.error("JSON 解析错误:", error.message);
+        process.exit(1);
+    }
 }
 
+
 // 主函数调用
-async function fetchDataAndProcess(sessionid, realm, realm_id, customEconomyState, customEconomyStateButton) {
-    let economyState;
-    if (customEconomyStateButton) {
-        if (customEconomyState === '萧条') {
-            economyState = 0;
-        } else if (customEconomyState === '平缓') {
-            economyState = 1;
-        } else if (customEconomyState === '景气') {
-            economyState = 2;
-        }
-    } else {
-        economyState = await get_economyState(sessionid);
+async function fetchDataAndProcess(realm) {
+    // 1. 获取市场数据
+    const marketData = await getMarketData(realm);
+
+    // 2. 获取脚本 URL 和内容
+    const scriptUrl = await fetchScriptUrl();
+    const scriptContent = await fetchScriptData(scriptUrl);
+
+    // 3. 循环处理每个经济周期
+    for (let economyState = 0; economyState <= 2; economyState++) {
+        const extractedData = await ExtractData(realm, economyState, marketData, scriptContent);
+
+        // 保存数据到文件
+        const fileName = `${realm}_${economyState}_data.json`;
+        fs.writeFileSync(fileName, JSON.stringify(extractedData, null, 2), 'utf-8');
+        console.log(`经济周期 ${economyState} 的数据已保存到 ${fileName}`);
     }
-
-    const marketData = await getMarketData(realm_id);
-
-    if (marketData[3] && (!marketData[3].averagePrice || marketData[3].averagePrice < 0.1)) {
-        console.log('数据错误，退出程序。');
-        process.exit(1);
-    }
-
-    const rowData1 = await downloadAndExtractData(realm_id, economyState, marketData);
-    
-    const fileName = `${realm}_data.json`;
-    fs.writeFileSync(fileName, JSON.stringify(rowData1, null, 2), 'utf-8');
-    console.log(`数据已保存到 ${fileName}`);
 }
 
 // 调用主函数
-fetchDataAndProcess(sessionid, realm, realm_id, customEconomyState, customEconomyStateButton);
+fetchDataAndProcess(realm);
