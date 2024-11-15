@@ -3,7 +3,7 @@ const fs = require('fs');
 
 // 获取命令行参数
 const args = process.argv.slice(2);
-const realm = args[1] || 0; // 服务器 ID
+const realm = args[1]; // 服务器 ID
 const isDebug = args[2] || 'false'; // debug
 // 输出日志函数
 function log(message) {
