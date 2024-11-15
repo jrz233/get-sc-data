@@ -4,19 +4,23 @@ const fs = require('fs');
 // 获取命令行参数
 const args = process.argv.slice(2);
 const sessionid = args[0] || ''; // sessionid
-const dataFile = args[1] || 'r1'; //文件名称
-const mode = args[2] || '0';  //服务器id
-const customEconomyState = args[3] || '平缓'; //周期
-const customEconomyStateButton = args[4] || 'true'; //是否自定义周期
+const realm = args[1] || 'r1'; //服务器名称
+const realm_id = args[2] || '0';  //服务器id
+const customEconomyState = args[3] || '平缓'; //自定义周期
+const customEconomyStateButton = args[4] || 'false'; //是否自定义周期
 const isDebug = args[5] || 'false'; //debug
-
 // 输出日志函数
 function log(message) {
     if (isDebug) {
         console.log(message);
     }
 }
-
+//确认使用哪个服务器的sessionid
+if (realm_id === '0') {
+    sessionid = process.env.sessionid_0 || sessionid;
+} else {
+    sessionid = process.env[`sessionid_${realm_id}`] || sessionid;
+}
 // 提取变量名
 function extractVariableName(jsContent, key) {
     // 使用非贪婪匹配查找键对应的变量名
@@ -317,4 +321,4 @@ async function fetchDataAndProcess(sessionid, realm, realm_id, customEconomyStat
 }
 
 // 调用主函数
-fetchDataAndProcess(sessionid, dataFile, mode, customEconomyState, customEconomyStateButton);
+fetchDataAndProcess(sessionid, realm, realm_id, customEconomyState, customEconomyStateButton);

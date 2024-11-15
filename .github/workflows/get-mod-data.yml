@@ -10,7 +10,7 @@ jobs:
     env:
       OUTPUT_DIR: ./data
       R1: 平缓
-      R2: 平缓
+      R2: 萧条
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v3
