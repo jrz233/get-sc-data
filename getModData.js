@@ -164,7 +164,7 @@ function calculateBuildingWages(averageSalary, salesData, buildingDetails) {
 
 // 提取JSON字符串
 function extractJsonString(content) {
-    const jsonStringMatch = content.match(/\{0:\{1:\{buildingLevelsNeededPerHour:[\s\S]*?\}\}\}/);
+    const jsonStringMatch = content.match(/\{0:\{1:\{buildingLevelsNeededPerUnitPerHour:[\s\S]*?\}\}\}/);
     return jsonStringMatch ? jsonStringMatch[0] : null;
 }
 
