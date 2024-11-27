@@ -19,20 +19,27 @@ function log(message) {
 // 提取变量名
 function extractVariableName(jsContent, key) {
     // 使用非贪婪匹配查找键对应的变量名
-    const regex = new RegExp(key + '\\s*:\\s*([\\w$]+),');
+    const regex = new RegExp(key + '\\s*:\\s*([\\w$]+)', 'g'); // 这里直接匹配变量名
     const match = jsContent.match(regex);
-    return match ? match[1] : null;
+    
+    if (match) {
+        const variableName = match[0].split(':')[1].trim(); // 获取匹配的变量名
+        log(`${key} 匹配到的变量名：${variableName}`);
+        return variableName;
+    } 
+    console.log(`未找到 ${key} 匹配的变量名`);
+    return null;
 }
-
-// 提取变量值（匹配模式：0 - 简单值，1 - 复杂对象）
+// 提取变量值（匹配模式：0 - 简单值，1 - 复杂对象, 2 - 简单对象）
 function extractVariableValue(jsContent, variableName, mode) {
     if (!variableName) return null;
 
     // 处理包含特殊符号的变量名，确保正则表达式可以正确匹配
     const escapedVariableName = variableName.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+    log(`正在提取变量：${variableName}`);
 
     if (mode === 1) {
-        // 匹配复杂对象，使用递归的方式来匹配嵌套对象，直到遇到完整的 '}'
+        // 复杂对象模式
         let braceLevel = 0;
         let startIndex = jsContent.indexOf(variableName);
         if (startIndex !== -1) {
@@ -44,13 +51,26 @@ function extractVariableValue(jsContent, variableName, mode) {
                 } else if (jsContent[i] === '}') {
                     braceLevel--;
                     if (braceLevel === 0) {
-                        return jsContent.substring(startIndex, i + 1).trim();
+                        return jsContent.substring(startIndex, i + 1).trim(); // 返回原始的对象字面量字符串
                     }
                 }
             }
         }
+    } else if (mode === 2) {
+        // 单层对象模式（返回原始字符串）
+        let regex = new RegExp(escapedVariableName + '\\s*[=:]\\s*(\\{[^}]*\\})', 's');
+        let match = jsContent.match(regex);
+        
+        if (match) {
+            let objectLiteral = match[1].trim();            
+            // 将以小数点开头的值补全
+            objectLiteral = objectLiteral.replace(/:\s*\.(\d+)/g, ': 0.$1');
+            return objectLiteral;
+        } else {
+            console.log(`未找到匹配的对象字面量`);
+        }
     } else {
-        // 匹配简单值
+        // 简单值模式
         let regex = new RegExp(escapedVariableName + '\\s*=\\s*([^,;\\n]+)[,;\\n]');
         let match = jsContent.match(regex);
         if (match) {
@@ -61,17 +81,16 @@ function extractVariableValue(jsContent, variableName, mode) {
             return value;
         }
     }
-
     console.log(`在提供的 JS 内容中找不到 ${variableName} 的值`);
     return null;
 }
-
 
 // 提取JS文件中的变量值
 function extractValuesFromJS(jsContent) {
     const profitVarName = extractVariableName(jsContent, 'PROFIT_PER_BUILDING_LEVEL');
     const retailVarName = extractVariableName(jsContent, 'RETAIL_MODELING_QUALITY_WEIGHT');
     const salesVarName = extractVariableName(jsContent, 'SALES');
+    const adjustmentVarName = extractVariableName(jsContent, 'RETAIL_ADJUSTMENT');
     const averageVarName = extractVariableName(jsContent, 'AVERAGE_SALARY');
 
     const profitValue = extractVariableValue(jsContent, profitVarName, 0);
@@ -92,6 +111,14 @@ function extractValuesFromJS(jsContent) {
         console.log('获取错误退出程序。');
         process.exit(1);
     }
+   
+    const adjustmentValue = extractVariableValue(jsContent, adjustmentVarName, 2);
+    console.log("建筑零售调整数据: " + JSON.stringify(adjustmentValue, null, 2));
+    if (adjustmentValue === null) {
+        console.log('获取错误退出程序。');
+        process.exit(1);
+    }
+
     const averageValue = parseFloat(extractVariableValue(jsContent, averageVarName, 0));
     log("平均工资: " + averageValue);
     if (averageValue === null) {
@@ -111,7 +138,30 @@ function extractValuesFromJS(jsContent) {
         SALES: salesValue,
         AVERAGE_SALARY: averageValue,
         BUILDING_DETAILS: buildingDetails,
+        RETAIL_ADJUSTMENT: adjustmentValue,
     };
+}
+
+
+// 根据销售数据和零售调整数据生成调整映射
+function getRetailAdjustmentByItemID(salesData, retailAdjustmentData) {
+    // 解析零售调整数据
+    const adjustmentMap = JSON.parse(
+        retailAdjustmentData.replace(/(\w+)\s*:/g, '"$1":')
+    );
+
+    // 创建物品 ID 到零售调整值的映射
+    const itemAdjustmentMap = {};
+
+    // 遍历销售数据
+    for (const [buildingID, items] of Object.entries(salesData)) {
+        const adjustmentValue = adjustmentMap[buildingID]; // 获取该建筑的调整值
+        for (const itemID of items) {
+            itemAdjustmentMap[itemID] = adjustmentValue !== undefined ? adjustmentValue : null;
+        }
+    }
+
+    return itemAdjustmentMap;
 }
 
 // 提取建筑详细信息
@@ -188,7 +238,7 @@ function extractData(data, realm, economyState, marketData, buildingWagesData) {
                     averagePrice: marketInfo.averagePrice,
                     marketSaturation: marketInfo.marketSaturation,
                     building_wages: buildingWagesData[id] || 0,
-                    buildingLevelsNeededPerHour: modelData.buildingLevelsNeededPerUnitPerHour,
+                    buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour,
                     modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit,
                     modeledStoreWages: modelData.modeledStoreWages,
                     modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour,
@@ -271,6 +321,10 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
             values.SALES,
             values.BUILDING_DETAILS
         );
+        const adjustmentData = getRetailAdjustmentByItemID(
+            values.SALES,
+            values.RETAIL_ADJUSTMENT
+        );
 
         // 遍历经济数据，整合市场和工资数据
         for (let id in economyData) {
@@ -281,10 +335,11 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
                     averagePrice: marketInfo.averagePrice || 0,
                     marketSaturation: marketInfo.marketSaturation || 0,
                     building_wages: buildingWagesData[id] || 0,
-                    buildingLevelsNeededPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
+                    buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
                     modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
                     modeledStoreWages: modelData.modeledStoreWages || 0,
                     modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
+                    retail_adjustment: adjustmentData[id] || null,
                 };
             }
         }
@@ -323,3 +378,5 @@ async function fetchDataAndProcess(realm) {
 
 // 调用主函数
 fetchDataAndProcess(realm);
+
+
