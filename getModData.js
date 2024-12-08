@@ -105,10 +105,10 @@ function extractValuesFromJS(jsContent) {
         console.log('获取错误退出程序。');
         process.exit(1);
     }
-    const salesValue = JSON.parse(extractVariableValue(jsContent, salesVarName, 1).replace(/(\w+)\s*:/g, '"$1":'));
+    const salesValue = JSON.parse(extractVariableValue(jsContent, salesVarName, 2).replace(/(\w+)\s*:/g, '"$1":'));
     log("建筑数据: " + JSON.stringify(salesValue, null, 2));
-    if (salesValue === null) {
-        console.log('获取错误退出程序。');
+    if (!salesValue || (typeof salesValue === 'object' && Object.keys(salesValue).length === 0)) {
+        console.log('获取错误，退出程序。');
         process.exit(1);
     }
    
