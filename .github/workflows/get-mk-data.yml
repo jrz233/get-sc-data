@@ -22,11 +22,8 @@ jobs:
     - name: Install Dependencies
       run: npm install axios node-fetch
 
-    - name: Run getMarketData_r1
-      run: node getMarketData.js 0
-
-    - name: Run getMarketData_r2
-      run: node getMarketData.js 1
+    - name: Run getMarketData
+      run: node getMarketData.js
 
     - name: Save output files
       run: |
