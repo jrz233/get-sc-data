@@ -29,7 +29,12 @@ jobs:
       run: |
         set -e
         mkdir -p ${{ env.OUTPUT_DIR }}
-        cp *_data.json ${{ env.OUTPUT_DIR }} || { echo "复制文件失败"; exit 1; }
+        if ls *_data.json 1> /dev/null 2>&1; then
+          cp *_data.json ${{ env.OUTPUT_DIR }}
+          echo "文件已成功复制到 ${{ env.OUTPUT_DIR }}"
+        else
+          echo "没有找到匹配的文件，跳过此步骤"
+        fi
       if: always()  # 无论前面步骤是否出错，都会执行
 
     - name: Commit changes
@@ -40,5 +45,5 @@ jobs:
         git add ${{ env.OUTPUT_DIR }}/
         timestamp=$(date +"%Y-%m-%d %H:%M:%S")
         git commit -m "提交市场数据: $timestamp" || { echo "没有要提交的更改"; exit 0; }
-        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止  
+        git pull https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git main || true  # 出错不停止
         git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main || true  # 出错不停止
