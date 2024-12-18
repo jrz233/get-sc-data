@@ -10,10 +10,10 @@ const ids = [
   119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 140, 144, 146, 147, 148
 ];
 
-// 获取市场API数据（一次性获取全部）
+// 获取市场前一天vwap价格
 async function fetchAllMarketData(realm) {
-  const url = `https://api.simcotools.com/v1/realms/${realm}/market/prices`;
-
+  const url = `https://api.simcotools.com/v1/realms/${realm}/market/vwaps`;
+  
   try {
     const response = await fetch(url);
 
@@ -22,8 +22,8 @@ async function fetchAllMarketData(realm) {
     }
 
     const data = await response.json();
-    console.log(`成功获取领域 ${realm} 的数据，共 ${data.prices.length} 条记录。`);
-    return data.prices;
+    console.log(`成功获取领域 ${realm} 的数据，共 ${data.vwaps.length} 条记录。`);
+    return data.vwaps;
   } catch (error) {
     console.error(`请求错误：领域 ${realm}，错误信息：${error.message}`);
     return null;
@@ -31,11 +31,11 @@ async function fetchAllMarketData(realm) {
 }
 
 // 将原始数据按指定 IDs 过滤并转换为目标格式
-function filterAndTransformData(prices) {
+function filterAndTransformData(vwaps) {
   const result = [];
-  prices.forEach(({ resourceId, quality, price }) => {
+  vwaps.forEach(({ resourceId, quality, vwap }) => {
     if (ids.includes(resourceId)) {
-      result.push([resourceId, quality, price]);
+      result.push([resourceId, quality, vwap]);
     }
   });
   return result;

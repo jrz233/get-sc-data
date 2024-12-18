@@ -214,7 +214,8 @@ function calculateBuildingWages(averageSalary, salesData, buildingDetails) {
 
 // 提取JSON字符串
 function extractJsonString(content) {
-    const jsonStringMatch = content.match(/\{0:\{1:\{buildingLevelsNeededPerUnitPerHour:[\s\S]*?\}\}\}/);
+    const jsonStringMatch = content.match(/\{0:\{1[\s\S]*?(?=\}\}\}\}\})\}\}\}\}\}/);
+
     return jsonStringMatch ? jsonStringMatch[0] : null;
 }
 
@@ -308,8 +309,9 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
     try {
         // 转换为有效的 JSON 格式
         const validJsonString = convertToValidJson(jsonDataString);
+        console.log("转换后的 JSON 字符串：", validJsonString);
         const jsonData = JSON.parse(validJsonString);
-
+        //console.log("转换后的 JSON 字符串：", jsonData);
         // 提取特定经济周期的数据
         const economyData = jsonData[economyState];
         const resultData = {};
