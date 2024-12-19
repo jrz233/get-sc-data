@@ -285,18 +285,32 @@ async function getMarketData(realm) {
         const response = await axios.get(url);
         const marketData = response.data;
         const marketDataMap = {};
+
         marketData.forEach(item => {
-            marketDataMap[item.dbLetter] = {
-                averagePrice: item.averagePrice,
-                marketSaturation: item.saturation
-            };
+            if (item.dbLetter === 150) {
+                // 针对 150 的品质进行特殊处理
+                if (!marketDataMap[150]) {
+                    marketDataMap[150] = {};
+                }
+                marketDataMap[150][item.quality] = {
+                    averagePrice: item.averagePrice,
+                    marketSaturation: item.saturation
+                };
+            } else {
+                marketDataMap[item.dbLetter] = {
+                    averagePrice: item.averagePrice,
+                    marketSaturation: item.saturation
+                };
+            }
         });
+
         return marketDataMap;
     } catch (error) {
         console.error('获取市场数据时出错:', error.message);
         process.exit(1);
     }
 }
+
 
 //提取数据
 async function ExtractData(realm, economyState, marketData, scriptContent) {
@@ -307,16 +321,12 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
     }
 
     try {
-        // 转换为有效的 JSON 格式
         const validJsonString = convertToValidJson(jsonDataString);
-        console.log("转换后的 JSON 字符串：", validJsonString);
         const jsonData = JSON.parse(validJsonString);
-        //console.log("转换后的 JSON 字符串：", jsonData);
-        // 提取特定经济周期的数据
+
         const economyData = jsonData[economyState];
         const resultData = {};
 
-        // 提取核心参数
         const values = extractValuesFromJS(scriptContent);
         const buildingWagesData = calculateBuildingWages(
             values.AVERAGE_SALARY,
@@ -328,25 +338,47 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
             values.RETAIL_ADJUSTMENT
         );
 
-        // 遍历经济数据，整合市场和工资数据
         for (let id in economyData) {
-            const modelData = economyData[id];
-            const marketInfo = marketData[id] || { averagePrice: 0, marketSaturation: 0 };
-            if (marketInfo.averagePrice >= 0.1 && marketInfo.marketSaturation !== 0) {
-                resultData[id] = {
-                    averagePrice: marketInfo.averagePrice || 0,
-                    marketSaturation: marketInfo.marketSaturation || 0,
-                    building_wages: buildingWagesData[id] || 0,
-                    buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
-                    modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
-                    modeledStoreWages: modelData.modeledStoreWages || 0,
-                    modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
-                    retail_adjustment: adjustmentData[id] || null,
-                };
+            if (id === '150') {
+                // 针对 150 的多品质处理
+                const qualityData = economyData[id].quality;
+                for (let quality in qualityData) {
+                    const modelData = qualityData[quality];
+                    const marketInfo = (marketData[150] && marketData[150][quality]) || { averagePrice: 0, marketSaturation: 0 };
+                    if (marketInfo.averagePrice >= 0.1 && marketInfo.marketSaturation !== 0) {
+                        if (!resultData[150]) {
+                            resultData[150] = {};
+                        }
+                        resultData[150][quality] = {
+                            averagePrice: marketInfo.averagePrice || 0,
+                            marketSaturation: marketInfo.marketSaturation || 0,
+                            building_wages: buildingWagesData[id] || 0,
+                            buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
+                            modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
+                            modeledStoreWages: modelData.modeledStoreWages || 0,
+                            modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
+                            retail_adjustment: adjustmentData[id] || null,
+                        };
+                    }
+                }
+            } else {
+                const modelData = economyData[id];
+                const marketInfo = marketData[id] || { averagePrice: 0, marketSaturation: 0 };
+                if (marketInfo.averagePrice >= 0.1 && marketInfo.marketSaturation !== 0) {
+                    resultData[id] = {
+                        averagePrice: marketInfo.averagePrice || 0,
+                        marketSaturation: marketInfo.marketSaturation || 0,
+                        building_wages: buildingWagesData[id] || 0,
+                        buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
+                        modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
+                        modeledStoreWages: modelData.modeledStoreWages || 0,
+                        modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
+                        retail_adjustment: adjustmentData[id] || null,
+                    };
+                }
             }
         }
 
-        // 添加额外的计算结果
         resultData.PROFIT_PER_BUILDING_LEVEL = values.PROFIT_PER_BUILDING_LEVEL;
         resultData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
 
@@ -356,6 +388,7 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
         process.exit(1);
     }
 }
+
 
 
 // 主函数调用
