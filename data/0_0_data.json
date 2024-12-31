@@ -530,6 +530,16 @@
     "retail_adjustment": null
   },
   "150": {
+    "0": {
+      "averagePrice": -329.6533501896334,
+      "marketSaturation": 0.1,
+      "building_wages": 241.5,
+      "buildingLevelsNeededPerUnitPerHour": 0.9995571131994511,
+      "modeledProductionCostPerUnit": 82.11512398326686,
+      "modeledStoreWages": 265.65,
+      "modeledUnitsSoldAnHour": 5,
+      "retail_adjustment": null
+    },
     "1": {
       "averagePrice": 1675.201047120419,
       "marketSaturation": 0.1,
