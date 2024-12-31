@@ -345,7 +345,8 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
                 for (let quality in qualityData) {
                     const modelData = qualityData[quality];
                     const marketInfo = (marketData[150] && marketData[150][quality]) || { averagePrice: 0, marketSaturation: 0 };
-                    if (marketInfo.averagePrice >= 0.1 && marketInfo.marketSaturation !== 0) {
+                    if (marketInfo.marketSaturation !== 0) {
+
                         if (!resultData[150]) {
                             resultData[150] = {};
                         }
