@@ -1,7 +1,7 @@
 {
   "3": {
-    "averagePrice": 7.751698851730838,
-    "marketSaturation": 1.6539417454691148,
+    "averagePrice": 7.863872613915729,
+    "marketSaturation": 1.6442805205448254,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.008044197700126264,
     "modeledProductionCostPerUnit": 1.3443057880333458,
@@ -10,8 +10,8 @@
     "retail_adjustment": null
   },
   "4": {
-    "averagePrice": 9.33717314575382,
-    "marketSaturation": 1.7018743872263917,
+    "averagePrice": 9.213128253336654,
+    "marketSaturation": 1.7141852366349328,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.008468659746253965,
     "modeledProductionCostPerUnit": 1.3882376098075626,
@@ -20,8 +20,8 @@
     "retail_adjustment": null
   },
   "5": {
-    "averagePrice": 10.634958963012332,
-    "marketSaturation": 1.647610136392241,
+    "averagePrice": 10.614021666197432,
+    "marketSaturation": 1.6571783832220541,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.009926943737877225,
     "modeledProductionCostPerUnit": 1.7042446242535634,
@@ -30,8 +30,8 @@
     "retail_adjustment": null
   },
   "7": {
-    "averagePrice": 65.71277274906241,
-    "marketSaturation": 1.3727982630333917,
+    "averagePrice": 65.92019608771847,
+    "marketSaturation": 1.3683676727224643,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.095492682981571,
     "modeledProductionCostPerUnit": 24.98377551904246,
@@ -40,8 +40,8 @@
     "retail_adjustment": null
   },
   "8": {
-    "averagePrice": 18.250927212804637,
-    "marketSaturation": 1.210964517848969,
+    "averagePrice": 18.359587213670945,
+    "marketSaturation": 1.2124591277294952,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.02221816794682161,
     "modeledProductionCostPerUnit": 6.72213881963258,
@@ -50,8 +50,8 @@
     "retail_adjustment": null
   },
   "9": {
-    "averagePrice": 3.1816884608158382,
-    "marketSaturation": 1.6375741204364045,
+    "averagePrice": 3.2075813219687452,
+    "marketSaturation": 1.651394083448224,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.004733489699164731,
     "modeledProductionCostPerUnit": 0.7125887946138861,
@@ -60,8 +60,8 @@
     "retail_adjustment": null
   },
   "11": {
-    "averagePrice": 53.031869141066224,
-    "marketSaturation": 0.8980407100133918,
+    "averagePrice": 52.956750831836004,
+    "marketSaturation": 0.8942165116869722,
     "building_wages": 345,
     "buildingLevelsNeededPerUnitPerHour": 0.05626876324510871,
     "modeledProductionCostPerUnit": 22.67431233835862,
@@ -70,8 +70,8 @@
     "retail_adjustment": null
   },
   "12": {
-    "averagePrice": 52.117261971254365,
-    "marketSaturation": 0.921924122510095,
+    "averagePrice": 52.1530081651242,
+    "marketSaturation": 0.9195286523557512,
     "building_wages": 345,
     "buildingLevelsNeededPerUnitPerHour": 0.05599644606444132,
     "modeledProductionCostPerUnit": 22.54278314009627,
@@ -80,8 +80,8 @@
     "retail_adjustment": null
   },
   "24": {
-    "averagePrice": 958.4779434231513,
-    "marketSaturation": 0.6227319655299455,
+    "averagePrice": 959.0819583693461,
+    "marketSaturation": 0.6264032549904301,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.8377949769982351,
     "modeledProductionCostPerUnit": 313.798879301865,
@@ -90,8 +90,8 @@
     "retail_adjustment": null
   },
   "25": {
-    "averagePrice": 1530.698805661354,
-    "marketSaturation": 0.9869569740171719,
+    "averagePrice": 1526.8257011297321,
+    "marketSaturation": 0.99489356762537,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 1.0333095920699313,
     "modeledProductionCostPerUnit": 386.2359406767831,
@@ -100,8 +100,8 @@
     "retail_adjustment": null
   },
   "26": {
-    "averagePrice": 1689.8732343110812,
-    "marketSaturation": 0.7343634480359903,
+    "averagePrice": 1709.0152315835003,
+    "marketSaturation": 0.7241880709722079,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 1.6085311504400206,
     "modeledProductionCostPerUnit": 607.7861475033761,
@@ -110,8 +110,8 @@
     "retail_adjustment": null
   },
   "27": {
-    "averagePrice": 845.2886855054683,
-    "marketSaturation": 0.6127506821697043,
+    "averagePrice": 856.565447119604,
+    "marketSaturation": 0.6157516271537892,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.7383162803616148,
     "modeledProductionCostPerUnit": 280.00968037793444,
@@ -120,8 +120,8 @@
     "retail_adjustment": null
   },
   "28": {
-    "averagePrice": 1270.6734511246782,
-    "marketSaturation": 0.4994409482460017,
+    "averagePrice": 1296.276255160894,
+    "marketSaturation": 0.49902120171369724,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 1.2534173120807357,
     "modeledProductionCostPerUnit": 476.7062435722529,
@@ -130,8 +130,8 @@
     "retail_adjustment": null
   },
   "53": {
-    "averagePrice": 4069.7811813186813,
-    "marketSaturation": 0.5918057050031728,
+    "averagePrice": 4066.933102499223,
+    "marketSaturation": 0.588978880468844,
     "building_wages": 379.5,
     "buildingLevelsNeededPerUnitPerHour": 4.672236381822931,
     "modeledProductionCostPerUnit": 1730.9671689838988,
@@ -140,8 +140,8 @@
     "retail_adjustment": null
   },
   "54": {
-    "averagePrice": 8970.303253710803,
-    "marketSaturation": 0.6283511472839755,
+    "averagePrice": 8981.657211905367,
+    "marketSaturation": 0.6312264212915288,
     "building_wages": 379.5,
     "buildingLevelsNeededPerUnitPerHour": 9.00112740430846,
     "modeledProductionCostPerUnit": 3278.4619568190324,
@@ -150,8 +150,8 @@
     "retail_adjustment": null
   },
   "55": {
-    "averagePrice": 2893.3134548500466,
-    "marketSaturation": 0.5978767686022721,
+    "averagePrice": 2888.2941882248933,
+    "marketSaturation": 0.602441188075669,
     "building_wages": 379.5,
     "buildingLevelsNeededPerUnitPerHour": 3.0218003910435933,
     "modeledProductionCostPerUnit": 1158.7683303533126,
@@ -160,8 +160,8 @@
     "retail_adjustment": null
   },
   "56": {
-    "averagePrice": 6444.570611905979,
-    "marketSaturation": 1.0170732952208477,
+    "averagePrice": 6516.357941912173,
+    "marketSaturation": 1.0100343130233076,
     "building_wages": 379.5,
     "buildingLevelsNeededPerUnitPerHour": 5.896619650279817,
     "modeledProductionCostPerUnit": 2222.1336356050774,
@@ -170,8 +170,8 @@
     "retail_adjustment": null
   },
   "57": {
-    "averagePrice": 6802.15714443585,
-    "marketSaturation": 0.38648589970102376,
+    "averagePrice": 6773.188712328767,
+    "marketSaturation": 0.3838896679081353,
     "building_wages": 379.5,
     "buildingLevelsNeededPerUnitPerHour": 7.084558543237653,
     "modeledProductionCostPerUnit": 2881.671650559522,
@@ -180,8 +180,8 @@
     "retail_adjustment": null
   },
   "60": {
-    "averagePrice": 55.66626944652838,
-    "marketSaturation": 1.8255156662004957,
+    "averagePrice": 55.33450673747221,
+    "marketSaturation": 1.8390499287571977,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 0.02167561164497093,
     "modeledProductionCostPerUnit": 3.0664550470583083,
@@ -190,8 +190,8 @@
     "retail_adjustment": 0.9
   },
   "61": {
-    "averagePrice": 73.44888267291161,
-    "marketSaturation": 1.5102624070412278,
+    "averagePrice": 74.02552907211006,
+    "marketSaturation": 1.4967052159583019,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 0.060303811522999656,
     "modeledProductionCostPerUnit": 9.161671345819462,
@@ -200,8 +200,8 @@
     "retail_adjustment": 0.9
   },
   "62": {
-    "averagePrice": 47.47810895417823,
-    "marketSaturation": 1.2360971766248081,
+    "averagePrice": 47.23961646632257,
+    "marketSaturation": 1.2410807561969603,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 0.06028878405204027,
     "modeledProductionCostPerUnit": 10.750818424644208,
@@ -210,8 +210,8 @@
     "retail_adjustment": 0.9
   },
   "63": {
-    "averagePrice": 72.52570842457537,
-    "marketSaturation": 1.2834539309823116,
+    "averagePrice": 72.48863288866444,
+    "marketSaturation": 1.2820759112447857,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 0.1037736274986778,
     "modeledProductionCostPerUnit": 16.807152388178515,
@@ -220,8 +220,8 @@
     "retail_adjustment": 0.9
   },
   "64": {
-    "averagePrice": 107.01786452719658,
-    "marketSaturation": 1.3234897865542203,
+    "averagePrice": 108.49338970812002,
+    "marketSaturation": 1.3177512378815839,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 0.1511885000445148,
     "modeledProductionCostPerUnit": 23.27041811300111,
@@ -230,8 +230,8 @@
     "retail_adjustment": 0.9
   },
   "65": {
-    "averagePrice": 46.44767724445456,
-    "marketSaturation": 1.4056310880568978,
+    "averagePrice": 46.64784669471012,
+    "marketSaturation": 1.4078349823688732,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 0.018718702775091762,
     "modeledProductionCostPerUnit": 6.993789593574047,
@@ -240,8 +240,8 @@
     "retail_adjustment": 0.9
   },
   "67": {
-    "averagePrice": 14.382377636072114,
-    "marketSaturation": 0.6904706105846266,
+    "averagePrice": 14,
+    "marketSaturation": 0.6129939120339309,
     "building_wages": 241.5,
     "buildingLevelsNeededPerUnitPerHour": 0.0162056603206317,
     "modeledProductionCostPerUnit": 6.16892417453501,
@@ -250,8 +250,8 @@
     "retail_adjustment": null
   },
   "70": {
-    "averagePrice": 1129.2744222418867,
-    "marketSaturation": 0.9007545726119646,
+    "averagePrice": 1128.2236962401432,
+    "marketSaturation": 0.9010402451201922,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 1.1995169978658686,
     "modeledProductionCostPerUnit": 424.7213109870318,
@@ -260,8 +260,8 @@
     "retail_adjustment": 0.9
   },
   "71": {
-    "averagePrice": 2136.3478467153286,
-    "marketSaturation": 1.0531984469013151,
+    "averagePrice": 2135.5587433108926,
+    "marketSaturation": 1.0527595542631287,
     "building_wages": 310.5,
     "buildingLevelsNeededPerUnitPerHour": 2.4943554095933105,
     "modeledProductionCostPerUnit": 895.8842092292285,
@@ -270,8 +270,8 @@
     "retail_adjustment": 0.9
   },
   "91": {
-    "averagePrice": 134069.78028657546,
-    "marketSaturation": 1.0576990591821236,
+    "averagePrice": 134305.11233165846,
+    "marketSaturation": 1.0616511564900153,
     "building_wages": 586.5,
     "buildingLevelsNeededPerUnitPerHour": 138.59322340271748,
     "modeledProductionCostPerUnit": 60345.996725713834,
@@ -280,8 +280,8 @@
     "retail_adjustment": 2.3
   },
   "94": {
-    "averagePrice": 883273.4281807909,
-    "marketSaturation": 1.0766518099306708,
+    "averagePrice": 888224.0834631248,
+    "marketSaturation": 1.0888700408809477,
     "building_wages": 586.5,
     "buildingLevelsNeededPerUnitPerHour": 985.6633600081573,
     "modeledProductionCostPerUnit": 440868.1260168881,
@@ -290,8 +290,8 @@
     "retail_adjustment": 2.3
   },
   "95": {
-    "averagePrice": 256008.47966680722,
-    "marketSaturation": 1.0244822507539018,
+    "averagePrice": 257870.0378297225,
+    "marketSaturation": 1.0310018254078093,
     "building_wages": 586.5,
     "buildingLevelsNeededPerUnitPerHour": 270.24708971382023,
     "modeledProductionCostPerUnit": 121709.10415460453,
@@ -300,8 +300,8 @@
     "retail_adjustment": 2.3
   },
   "96": {
-    "averagePrice": 97170.85062716744,
-    "marketSaturation": 1.0171099081732242,
+    "averagePrice": 97571.1428245509,
+    "marketSaturation": 1.0211613320441806,
     "building_wages": 586.5,
     "buildingLevelsNeededPerUnitPerHour": 94.09759859648445,
     "modeledProductionCostPerUnit": 42823.99727953362,
@@ -310,8 +310,8 @@
     "retail_adjustment": 2.3
   },
   "97": {
-    "averagePrice": 46583.57504360601,
-    "marketSaturation": 1.0616411396823189,
+    "averagePrice": 46906.481805006006,
+    "marketSaturation": 1.0611645601338857,
     "building_wages": 586.5,
     "buildingLevelsNeededPerUnitPerHour": 38.82062908528433,
     "modeledProductionCostPerUnit": 18073.613119396607,
@@ -320,8 +320,8 @@
     "retail_adjustment": 2.3
   },
   "98": {
-    "averagePrice": 1483.7299986656096,
-    "marketSaturation": 0.6962427725930056,
+    "averagePrice": 1479.7462166759883,
+    "marketSaturation": 0.6911023838733322,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 1.0729059465031447,
     "modeledProductionCostPerUnit": 432.7767902321064,
@@ -330,8 +330,8 @@
     "retail_adjustment": null
   },
   "99": {
-    "averagePrice": 69073.35138047492,
-    "marketSaturation": 0.9717888326007527,
+    "averagePrice": 69621.4626154624,
+    "marketSaturation": 0.9741860212898339,
     "building_wages": 586.5,
     "buildingLevelsNeededPerUnitPerHour": 63.7959621742625,
     "modeledProductionCostPerUnit": 27736.369522744357,
@@ -340,8 +340,8 @@
     "retail_adjustment": 2.3
   },
   "102": {
-    "averagePrice": 9.701266972824268,
-    "marketSaturation": 1.0860890075839915,
+    "averagePrice": 9.725017133020556,
+    "marketSaturation": 1.0862617108495136,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.0032601511432450644,
     "modeledProductionCostPerUnit": 1.193797683567072,
@@ -350,8 +350,8 @@
     "retail_adjustment": null
   },
   "103": {
-    "averagePrice": 16.539772058532648,
-    "marketSaturation": 0.7993650139783335,
+    "averagePrice": 16.53238127389094,
+    "marketSaturation": 0.7976537701650968,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.009328947565699923,
     "modeledProductionCostPerUnit": 3.2112868979196696,
@@ -360,8 +360,8 @@
     "retail_adjustment": null
   },
   "108": {
-    "averagePrice": 15.50513218947981,
-    "marketSaturation": 1.0396863815614015,
+    "averagePrice": 15.520847660958424,
+    "marketSaturation": 1.0278647707720823,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.016504947293560515,
     "modeledProductionCostPerUnit": 5.146996120473464,
@@ -370,8 +370,8 @@
     "retail_adjustment": null
   },
   "109": {
-    "averagePrice": 125.10569270812329,
-    "marketSaturation": 0.6725795147147069,
+    "averagePrice": 125.50344180810066,
+    "marketSaturation": 0.6805756218311017,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.13407542381470586,
     "modeledProductionCostPerUnit": 56.179177885031415,
@@ -380,8 +380,8 @@
     "retail_adjustment": null
   },
   "110": {
-    "averagePrice": 214.43368809156007,
-    "marketSaturation": 0.43346631808436903,
+    "averagePrice": 215.48760643124163,
+    "marketSaturation": 0.43606196288469884,
     "building_wages": 172.5,
     "buildingLevelsNeededPerUnitPerHour": 0.2509826968832165,
     "modeledProductionCostPerUnit": 96.17934506217765,
@@ -400,8 +400,8 @@
     "retail_adjustment": null
   },
   "119": {
-    "averagePrice": 45.240194829915154,
-    "marketSaturation": 1.429492005926306,
+    "averagePrice": 45.08891475964404,
+    "marketSaturation": 1.4357257205742011,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.08050244531472217,
     "modeledProductionCostPerUnit": 20.778117166349215,
@@ -430,8 +430,8 @@
     "retail_adjustment": null
   },
   "122": {
-    "averagePrice": 153.70080507788464,
-    "marketSaturation": 1.0710803069195365,
+    "averagePrice": 153.58339570347675,
+    "marketSaturation": 1.0695570718845262,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.2003990051608564,
     "modeledProductionCostPerUnit": 70.14489791409153,
@@ -440,8 +440,8 @@
     "retail_adjustment": null
   },
   "123": {
-    "averagePrice": 375.22871752060945,
-    "marketSaturation": 1.0257331004374552,
+    "averagePrice": 378.774084280376,
+    "marketSaturation": 1.034926675197089,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.45879021850752394,
     "modeledProductionCostPerUnit": 163.32461670256086,
@@ -450,8 +450,8 @@
     "retail_adjustment": null
   },
   "124": {
-    "averagePrice": 76.55402724441697,
-    "marketSaturation": 1.4579080106426376,
+    "averagePrice": 75.79953499774871,
+    "marketSaturation": 1.459602217018823,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.08088463773446969,
     "modeledProductionCostPerUnit": 19.327677359176757,
@@ -460,8 +460,8 @@
     "retail_adjustment": null
   },
   "125": {
-    "averagePrice": 74.34564462668646,
-    "marketSaturation": 1.6532671770719154,
+    "averagePrice": 74.4182516428681,
+    "marketSaturation": 1.6548786045505972,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.09087689304693333,
     "modeledProductionCostPerUnit": 17.159826018457228,
@@ -470,8 +470,8 @@
     "retail_adjustment": null
   },
   "126": {
-    "averagePrice": 108.32135622725113,
-    "marketSaturation": 1.5403252957540503,
+    "averagePrice": 108.80817019539444,
+    "marketSaturation": 1.5245803656846229,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.10185703378769287,
     "modeledProductionCostPerUnit": 27.64219363094093,
@@ -480,8 +480,8 @@
     "retail_adjustment": null
   },
   "127": {
-    "averagePrice": 548.6545096949059,
-    "marketSaturation": 1.211920118978482,
+    "averagePrice": 550.6886280750613,
+    "marketSaturation": 1.1926318927723405,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.8054487309477196,
     "modeledProductionCostPerUnit": 259.537876911075,
@@ -540,8 +540,8 @@
     "retail_adjustment": null
   },
   "140": {
-    "averagePrice": 295.29135174731766,
-    "marketSaturation": 1.0887614341968597,
+    "averagePrice": 296.52203572047864,
+    "marketSaturation": 1.0883121460430447,
     "building_wages": 138,
     "buildingLevelsNeededPerUnitPerHour": 0.4146236659027421,
     "modeledProductionCostPerUnit": 134.3247612705188,
@@ -570,8 +570,8 @@
     "retail_adjustment": null
   },
   "144": {
-    "averagePrice": 28.18009161447135,
-    "marketSaturation": 1.361117591334235,
+    "averagePrice": 27.83494768782141,
+    "marketSaturation": 1.3234509328497495,
     "building_wages": 241.5,
     "buildingLevelsNeededPerUnitPerHour": 0.022357911582420537,
     "modeledProductionCostPerUnit": 8.656581384492346,
@@ -581,7 +581,7 @@
   },
   "146": {
     "averagePrice": 23,
-    "marketSaturation": 0.12335442067029963,
+    "marketSaturation": 0.1184821391999879,
     "building_wages": 207,
     "buildingLevelsNeededPerUnitPerHour": 0.014829005900272127,
     "modeledProductionCostPerUnit": 2.8884140054447056,
@@ -590,8 +590,8 @@
     "retail_adjustment": null
   },
   "147": {
-    "averagePrice": 58,
-    "marketSaturation": 0.1,
+    "averagePrice": 58.56471428571429,
+    "marketSaturation": 0.10406383896253553,
     "building_wages": 207,
     "buildingLevelsNeededPerUnitPerHour": 0.05565750193233506,
     "modeledProductionCostPerUnit": 18.354213719443855,
@@ -600,8 +600,8 @@
     "retail_adjustment": null
   },
   "148": {
-    "averagePrice": 101.15925925925926,
-    "marketSaturation": 1.3546756779252884,
+    "averagePrice": 96.48987236863915,
+    "marketSaturation": 1.3156293658755909,
     "building_wages": 207,
     "buildingLevelsNeededPerUnitPerHour": 0.08419128624664426,
     "modeledProductionCostPerUnit": 16.32988867285757,
@@ -621,8 +621,8 @@
   },
   "150": {
     "0": {
-      "averagePrice": 556.1687898089172,
-      "marketSaturation": 0.6270332435413432,
+      "averagePrice": 568.9723241590215,
+      "marketSaturation": 0.62575847057688,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 0.9995571131994511,
       "modeledProductionCostPerUnit": 82.11512398326686,
@@ -631,8 +631,8 @@
       "retail_adjustment": null
     },
     "1": {
-      "averagePrice": 1397.6532125205931,
-      "marketSaturation": 1.0232062372046709,
+      "averagePrice": 1395.5324074074074,
+      "marketSaturation": 1.0225724880693732,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 2.96868462620237,
       "modeledProductionCostPerUnit": 243.88191823030255,
@@ -641,8 +641,8 @@
       "retail_adjustment": null
     },
     "2": {
-      "averagePrice": 2325.230769230769,
-      "marketSaturation": 1.5636319862911898,
+      "averagePrice": 2243.75,
+      "marketSaturation": 1.3796154368052624,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 6.856961796548234,
       "modeledProductionCostPerUnit": 563.3097505252106,
@@ -651,8 +651,8 @@
       "retail_adjustment": null
     },
     "3": {
-      "averagePrice": 6516.3488372093025,
-      "marketSaturation": 1.3418287221533713,
+      "averagePrice": 6300.998087954111,
+      "marketSaturation": 1.6540312951187033,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 14.543555997052014,
       "modeledProductionCostPerUnit": 1194.7750539565327,
@@ -661,8 +661,8 @@
       "retail_adjustment": null
     },
     "4": {
-      "averagePrice": 9932.40909090909,
-      "marketSaturation": 1.6254272929303957,
+      "averagePrice": 10044.93023255814,
+      "marketSaturation": 1.5081907284625748,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 29.74681968881566,
       "modeledProductionCostPerUnit": 2443.7460897420215,
@@ -671,8 +671,8 @@
       "retail_adjustment": null
     },
     "5": {
-      "averagePrice": 16500,
-      "marketSaturation": 1.2922070530515344,
+      "averagePrice": 20041.666666666668,
+      "marketSaturation": 1.1805736731135328,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 59.82349322498715,
       "modeledProductionCostPerUnit": 4914.590170398522,
@@ -681,8 +681,8 @@
       "retail_adjustment": null
     },
     "6": {
-      "averagePrice": 37936.84210526316,
-      "marketSaturation": 1.6924203864209069,
+      "averagePrice": 38201.666666666664,
+      "marketSaturation": 1.619624339334945,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 119.32712817375047,
       "modeledProductionCostPerUnit": 9802.903501122395,
@@ -691,8 +691,8 @@
       "retail_adjustment": null
     },
     "7": {
-      "averagePrice": 47423.529411764706,
-      "marketSaturation": 1.8050721005830246,
+      "averagePrice": 59500,
+      "marketSaturation": 2.12411820112731,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 237.04496939524984,
       "modeledProductionCostPerUnit": 19473.601652631733,
@@ -701,8 +701,8 @@
       "retail_adjustment": null
     },
     "8": {
-      "averagePrice": 106710.25,
-      "marketSaturation": 2.1441757087609448,
+      "averagePrice": 110000,
+      "marketSaturation": 1.9447832456138743,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 469.91179005732585,
       "modeledProductionCostPerUnit": 38603.96208701341,
@@ -711,8 +711,8 @@
       "retail_adjustment": null
     },
     "9": {
-      "averagePrice": 199000,
-      "marketSaturation": 2.338461684343558,
+      "averagePrice": 205617.6,
+      "marketSaturation": 2.347389391743546,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 930.517703390765,
       "modeledProductionCostPerUnit": 76443.4323697426,
@@ -721,8 +721,8 @@
       "retail_adjustment": null
     },
     "10": {
-      "averagePrice": 858000,
-      "marketSaturation": 1.1283044718481294,
+      "averagePrice": 823000,
+      "marketSaturation": 1.3403596666518125,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 1841.4840696473489,
       "modeledProductionCostPerUnit": 151280.6929143725,
@@ -732,7 +732,7 @@
     },
     "11": {
       "averagePrice": 1100000,
-      "marketSaturation": 0.32233313464568536,
+      "marketSaturation": 0.2836531584882031,
       "building_wages": 241.5,
       "buildingLevelsNeededPerUnitPerHour": 3642.935876911059,
       "modeledProductionCostPerUnit": 299272.67511321517,
