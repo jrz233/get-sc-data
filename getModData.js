@@ -338,66 +338,7 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
     try {
         const validJsonString = convertToValidJson(jsonDataString);
         const parsedData = JSON.parse(validJsonString);
-        const economyData = jsonData[economyState];
-        const resultData = {};
 
-        const values = extractValuesFromJS(scriptContent);
-        const buildingWagesData = calculateBuildingWages(
-            values.AVERAGE_SALARY,
-            values.SALES,
-            values.BUILDING_DETAILS
-        );
-        const adjustmentData = getRetailAdjustmentByItemID(
-            values.SALES,
-            values.RETAIL_ADJUSTMENT
-        );
-
-        for (let id in economyData) {
-            if (id === '150') {
-                // 针对 150 的多品质处理
-                const qualityData = economyData[id].quality;
-                for (let quality in qualityData) {
-                    const modelData = qualityData[quality];
-                    const marketInfo = (marketData[150] && marketData[150][quality]) || { averagePrice: 0, marketSaturation: 0 };
-                    if (marketInfo.marketSaturation !== 0) {
-
-                        if (!resultData[150]) {
-                            resultData[150] = {};
-                        }
-                        resultData[150][quality] = {
-                            averagePrice: marketInfo.averagePrice || 0,
-                            marketSaturation: marketInfo.marketSaturation || 0,
-                            building_wages: buildingWagesData[id] || 0,
-                            buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
-                            modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
-                            modeledStoreWages: modelData.modeledStoreWages || 0,
-                            modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
-                            retail_adjustment: adjustmentData[id] || null,
-                        };
-                    }
-                }
-            } else {
-                const modelData = economyData[id];
-                const marketInfo = marketData[id] || { averagePrice: 0, marketSaturation: 0 };
-                if (marketInfo.averagePrice >= 0.1 && marketInfo.marketSaturation !== 0) {
-                    resultData[id] = {
-                        averagePrice: marketInfo.averagePrice || 0,
-                        marketSaturation: marketInfo.marketSaturation || 0,
-                        building_wages: buildingWagesData[id] || 0,
-                        buildingLevelsNeededPerUnitPerHour: modelData.buildingLevelsNeededPerUnitPerHour || 0,
-                        modeledProductionCostPerUnit: modelData.modeledProductionCostPerUnit || 0,
-                        modeledStoreWages: modelData.modeledStoreWages || 0,
-                        modeledUnitsSoldAnHour: modelData.modeledUnitsSoldAnHour || 0,
-                        retail_adjustment: adjustmentData[id] || null,
-                    };
-                }
-            }
-        }
-
-        resultData.PROFIT_PER_BUILDING_LEVEL = values.PROFIT_PER_BUILDING_LEVEL;
-        resultData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
-
-        return resultData;
         // 重构数据处理逻辑
         const resultData = processModelData(parsedData);
         
