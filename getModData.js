@@ -338,8 +338,6 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
     try {
         const validJsonString = convertToValidJson(jsonDataString);
         const parsedData = JSON.parse(validJsonString);
-
-<<<<<<< HEAD
         const economyData = jsonData[economyState];
         const resultData = {};
 
@@ -400,13 +398,11 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
         resultData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
 
         return resultData;
-=======
         // 重构数据处理逻辑
         const resultData = processModelData(parsedData);
         
         // 合并市场数据
         return mergeMarketData(resultData, marketData, economyState, scriptContent);
->>>>>>> 46820e5621b6d56de39e8dd37d0f0bbd37008394
     } catch (error) {
         console.error("JSON 解析错误:", error.message);
         process.exit(1);
