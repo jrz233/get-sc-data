@@ -211,19 +211,36 @@ function calculateBuildingWages(averageSalary, salesData, buildingDetails) {
     return buildingWagesData;
 }
 
-
-// 提取JSON字符串
-function extractJsonString(content) {
-    const jsonStringMatch = content.match(/\{0:\{1[\s\S]*?(?=\}\}\}\}\})\}\}\}\}\}/);
-
-    return jsonStringMatch ? jsonStringMatch[0] : null;
+function extractJsonString(jsContent, economyState) {
+    let regexPattern;
+    switch (economyState) {
+        case 0:
+            regexPattern = /0:\s*JSON\.parse\('([\s\S]*?)'\)/;
+            break;
+        case 1:
+            regexPattern = /1:\s*JSON\.parse\('([\s\S]*?)'\)/;
+            break;
+        case 2:
+            regexPattern = /2:\s*JSON\.parse\('([\s\S]*?)'\)/;
+            break;
+        default:
+            return null;
+    }
+    const match = jsContent.match(regexPattern);
+    return match ? match[1] : null;
 }
 
-// 转换为有效的JSON格式
+
 function convertToValidJson(jsonDataString) {
-    jsonDataString = jsonDataString.replace(/([{,])(\s*)(\w+)(\s*):/g, '$1"$3":');
-    jsonDataString = jsonDataString.replace(/:\s*\.(\d+)/g, ': 0.$1');
-    return jsonDataString;
+    // 添加数组格式转换
+    const fixedArrayString = jsonDataString
+        .replace(/(\w+):\[/g, '"$1":[')  // 处理数组开头的key
+        .replace(/],(\w+):/g, '],"$1":'); // 处理数组结尾的key
+    
+    return fixedArrayString
+        .replace(/\\'/g, '"')
+        .replace(/([{,])(\s*)(\w+)(\s*):/g, '$1"$3":')
+        .replace(/:\s*\.(\d+)/g, ': 0.$1');
 }
 
 // 提取数据
@@ -311,10 +328,8 @@ async function getMarketData(realm) {
     }
 }
 
-
-//提取数据
 async function ExtractData(realm, economyState, marketData, scriptContent) {
-    const jsonDataString = extractJsonString(scriptContent);
+    const jsonDataString = extractJsonString(scriptContent, economyState);
     if (!jsonDataString) {
         console.log("未找到有效的 JSON 数据。");
         process.exit(1);
@@ -322,8 +337,9 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
 
     try {
         const validJsonString = convertToValidJson(jsonDataString);
-        const jsonData = JSON.parse(validJsonString);
+        const parsedData = JSON.parse(validJsonString);
 
+<<<<<<< HEAD
         const economyData = jsonData[economyState];
         const resultData = {};
 
@@ -384,12 +400,140 @@ async function ExtractData(realm, economyState, marketData, scriptContent) {
         resultData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
 
         return resultData;
+=======
+        // 重构数据处理逻辑
+        const resultData = processModelData(parsedData);
+        
+        // 合并市场数据
+        return mergeMarketData(resultData, marketData, economyState, scriptContent);
+>>>>>>> 46820e5621b6d56de39e8dd37d0f0bbd37008394
     } catch (error) {
         console.error("JSON 解析错误:", error.message);
         process.exit(1);
     }
 }
 
+function processModelData(parsedData) {
+    const result = {};
+    for (const [id, modelData] of Object.entries(parsedData)) {
+        result[id] = {};
+
+        // 处理quality数据类型（数组/对象）
+        if (modelData.quality) {
+            // 如果是数组直接遍历
+            if (Array.isArray(modelData.quality)) {
+                modelData.quality.forEach((qualityData, index) => {
+                    result[id][index] = extractModelFields(qualityData);
+                });
+            } 
+            // 如果是对象则遍历对象属性
+            else if (typeof modelData.quality === 'object') {
+                for (const [qualityKey, qualityData] of Object.entries(modelData.quality)) {
+                    result[id][qualityKey] = extractModelFields(qualityData);
+                }
+            }
+        } else {
+            // 没有quality时直接处理
+            result[id] = extractModelFields(modelData);
+        }
+    }
+    return result;
+}
+
+
+function extractModelFields(data) {
+    return {
+        buildingLevelsNeededPerUnitPerHour: data.buildingLevelsNeededPerUnitPerHour,
+        modeledProductionCostPerUnit: data.modeledProductionCostPerUnit,
+        modeledStoreWages: data.modeledStoreWages,
+        modeledUnitsSoldAnHour: data.modeledUnitsSoldAnHour
+    };
+}
+
+async function mergeMarketData(resultData, marketData, economyState, scriptContent) {
+    const values = extractValuesFromJS(scriptContent);
+    const buildingWagesData = calculateBuildingWages(
+        values.AVERAGE_SALARY,
+        values.SALES,
+        values.BUILDING_DETAILS
+    );
+    const adjustmentData = getRetailAdjustmentByItemID(
+        values.SALES,
+        values.RETAIL_ADJUSTMENT
+    );
+
+    // 合并市场数据逻辑（调整字段顺序）
+    for (const id in resultData) {
+        if (id === '150') {
+            for (const quality in resultData[id]) {
+                const marketInfo = (marketData[150] && marketData[150][quality]) || {};
+                resultData[id][quality] = {
+                    // 显式定义字段顺序
+                    averagePrice: marketInfo.averagePrice || 0,
+                    marketSaturation: marketInfo.marketSaturation || 0,
+                    building_wages: buildingWagesData[id] || 0,
+                    // 合并模型数据
+                    ...resultData[id][quality],
+                    // 添加调整数据
+                    retail_adjustment: adjustmentData[id] || null
+                };
+            }
+        } else {
+            const marketInfo = marketData[id] || {};
+            resultData[id] = {
+                // 显式定义字段顺序
+                averagePrice: marketInfo.averagePrice || 0,
+                marketSaturation: marketInfo.marketSaturation || 0,
+                building_wages: buildingWagesData[id] || 0,
+                // 合并模型数据
+                ...resultData[id],
+                // 添加调整数据
+                retail_adjustment: adjustmentData[id] || null
+            };
+        }
+    }
+
+    // 过滤逻辑
+    const filteredData = {};
+    for (const [id, data] of Object.entries(resultData)) {
+        // 跳过全局参数
+        if (['PROFIT_PER_BUILDING_LEVEL', 'RETAIL_MODELING_QUALITY_WEIGHT'].includes(id)) continue;
+
+        if (id !== '150') {
+            if (data.modeledStoreWages !== null && data.modeledStoreWages !== undefined) {
+                // 创建新对象保证字段顺序
+                filteredData[id] = {
+                    averagePrice: data.averagePrice,
+                    marketSaturation: data.marketSaturation,
+                    building_wages: data.building_wages,
+                    ...data
+                };
+            }
+        } else {
+            const validQualities = {};
+            for (const [qualityKey, qualityData] of Object.entries(data)) {
+                if (qualityData.modeledStoreWages !== null && qualityData.modeledStoreWages !== undefined) {
+                    // 创建新对象保证字段顺序
+                    validQualities[qualityKey] = {
+                        averagePrice: qualityData.averagePrice,
+                        marketSaturation: qualityData.marketSaturation,
+                        building_wages: qualityData.building_wages,
+                        ...qualityData
+                    };
+                }
+            }
+            if (Object.keys(validQualities).length > 0) {
+                filteredData[id] = validQualities;
+            }
+        }
+    }
+
+    // 保留全局参数
+    filteredData.PROFIT_PER_BUILDING_LEVEL = values.PROFIT_PER_BUILDING_LEVEL;
+    filteredData.RETAIL_MODELING_QUALITY_WEIGHT = values.RETAIL_MODELING_QUALITY_WEIGHT;
+
+    return filteredData;
+}
 
 
 // 主函数调用
